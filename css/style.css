@@ -1,0 +1,214 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* styles for header and admin sidebar */
+.site-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        z-index: 10;
+        font-family: Arial, sans-serif;
+    }
+
+    .site-header .brand {
+        font-size: 22px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .site-header .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .site-header .header-actions a,
+    .site-header .header-actions span {
+        color: #333;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+    }
+
+    .site-header .header-actions a:hover {
+        background: #2572ca;
+    }
+
+    .site-header .header-actions .button {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .site-header .header-actions .username {
+        font-weight: 600;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        width: 200px;
+        min-height: calc(100vh - 64px);
+        background: #f9f9f9;
+        border-right: 1px solid #ddd;
+        padding: 20px 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    .admin-sidebar a {
+        display: block;
+        padding: 10px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: background 0.2s ease;
+    }
+
+    .admin-sidebar a:hover {
+        background: #e9ecef;
+    }
+
+    .admin-sidebar .sidebar-title {
+        margin: 0 0 16px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: underline;
+        text-transform: uppercase;
+        color: #555;
+        letter-spacing: 0.05em;
+    }
+
+    .content-with-sidebar {
+        margin-left: 220px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .site-header {
+            flex-wrap: wrap;
+        }
+
+        .admin-sidebar {
+            position: static;
+            width: 100%;
+            min-height: auto;
+        }
+
+        .content-with-sidebar {
+            margin-left: 0;
+        }
+    }
+
+    /* For Sign up form */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        .container{
+            max-width: calc(100% - 240px);
+            margin: 84px 20px 0 220px;
+            padding: 20px;
+        }
+        .signup-container {
+            width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .signup-container h2 {
+            text-align: center;
+        }
+
+        .signup-container input, .signup-container select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .signup-container select:focus, .signup-container input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .signup-container button:hover {
+            background: #3383da;
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 15px;
+            color: green;
+        }
+/* Log in page style */
+body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .login-container {
+            width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container input:focus {
+            border-color: #188fff;
+            outline: none;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background: #188fff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .login-container button:hover {
+            background: rgb(27, 109, 231);
+        }
+
+        .login-container .message {
+            text-align: center;
+            margin-bottom: 15px;
+            color: red;
+        }
