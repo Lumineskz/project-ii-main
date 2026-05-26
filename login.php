@@ -54,10 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: admin/dashboard.php");
                     exit();
                 } elseif ($role === 'STUDENT') {
-                    header("Location: student/dashboard.php");
+                    header("Location: user/dashboard.php");
                     exit();
                 } elseif ($role === 'FACULTY') {
-                    header("Location: faculty/dashboard.php");
+                    header("Location: user/dashboard.php");
                     exit();
                 } else {
                     $message = "Invalid user role.";
