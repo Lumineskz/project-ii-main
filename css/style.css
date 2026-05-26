@@ -37,7 +37,7 @@
         transition: background 0.2s ease;
     }
 
-    .site-header .header-actions a:hover {
+    .site-header .header-actions .button:hover {
         background: #2572ca;
     }
 
@@ -88,7 +88,16 @@
     .content-with-sidebar {
         margin-left: 220px;
     }
-
+    .top-link {
+        color: #333;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+    }
+    .top-link:hover {
+        background: #ebebeb;
+    }
     @media screen and (max-width: 768px) {
         .site-header {
             flex-wrap: wrap;

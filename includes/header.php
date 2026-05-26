@@ -1,3 +1,36 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Determine login and role information. Accept ROLE in any case (e.g., 'ADMIN').
+$userLoggedIn = !empty($_SESSION['user'])
+    || !empty($_SESSION['username'])
+    || !empty($_SESSION['USER'])
+    || !empty($_SESSION['USERNAME'])
+    || !empty($_SESSION['ROLE'])
+    || !empty($_SESSION['role'])
+    || !empty($_SESSION['name'])
+    || !empty($_SESSION['NAME'])
+    || !empty($_SESSION['is_admin']);
+
+// Normalize role from possible session keys and treat 'ADMIN' (case-insensitive) as admin.
+$role = '';
+if (!empty($_SESSION['role'])) {
+    $role = strtoupper($_SESSION['role']);
+} elseif (!empty($_SESSION['ROLE'])) {
+    $role = strtoupper($_SESSION['ROLE']);
+} elseif (!empty($_SESSION['is_admin'])) {
+    $role = $_SESSION['is_admin'] ? 'ADMIN' : '';
+}
+
+$isAdmin = ($role === 'ADMIN');
+
+$username = '';
+if (!empty($_SESSION['full_name'])) {
+    $username = htmlspecialchars($_SESSION['full_name']);
+}
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -7,36 +40,6 @@
         <script src="https://kit.fontawesome.com/5f3c0ac785.js" crossorigin="anonymous"></script>
 
     </head>
-<?php
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Determine login and role information. Accept ROLE in any case (e.g., 'ADMIN').
-$userLoggedIn = !empty($_SESSION['user']) || !empty($_SESSION['username']) || !empty($_SESSION['ROLE']) || !empty($_SESSION['role']);
-
-// Normalize role from possible session keys and treat 'ADMIN' (case-insensitive) as admin.
-$role = '';
-if (!empty($_SESSION['role'])) {
-    $role = strtoupper($_SESSION['role']);
-} elseif (!empty($_SESSION['ROLE'])) {
-    $role = strtoupper($_SESSION['ROLE']);
-} elseif (!empty($_SESSION['is_admin'])) {
-    // legacy boolean flag
-    $role = $_SESSION['is_admin'] ? 'ADMIN' : '';
-}
-
-$isAdmin = ($role === 'ADMIN');
-
-$username = '';
-if (!empty($_SESSION['username'])) {
-    $username = htmlspecialchars($_SESSION['username']);
-} elseif (!empty($_SESSION['user'])) {
-    $username = htmlspecialchars($_SESSION['user']);
-}
-?>
-
 
 <header class="site-header">
     <div class="brand">Click2Eat</div>
@@ -47,10 +50,10 @@ if (!empty($_SESSION['username'])) {
             <span class="username"><i class="fas fa-user-shield"></i> <?= $username ?: 'Admin' ?></span>
             <a class="button" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
-            <a href="/order-history.php"><i class="fas fa-history"></i> Order History</a>
-            <a href="/menu.php"><i class="fas fa-utensils"></i> Menu</a>
-            <a href="/orders.php"><i class="fas fa-shopping-cart"></i> Orders</a>
-            <span class="username"><i class="fas fa-user"></i> <?= $username ?: 'Username' ?></span>
+            <a href="/order-history.php" class="top-link"><i class="fas fa-history"></i> Order History</a>
+            <a href="/menu.php" class="top-link"><i class="fas fa-utensils"></i> Menu</a>
+            <a href="/orders.php" class="top-link"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <span class="username" class="top-link"><i class="fas fa-user"></i> <?= $username ?: 'Username' ?></span>
             <a class="button" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php endif; ?>
     </div>
