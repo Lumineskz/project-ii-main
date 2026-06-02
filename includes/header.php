@@ -36,7 +36,7 @@ if (!empty($_SESSION['full_name'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Click2Eat</title>
-        <link rel="stylesheet" type="text/css" href="/Project-II/css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <script src="https://kit.fontawesome.com/5f3c0ac785.js" crossorigin="anonymous"></script>
 
     </head>
@@ -50,9 +50,9 @@ if (!empty($_SESSION['full_name'])) {
             <span class="username"><i class="fas fa-user-shield"></i> <?= $username ?: 'Admin' ?></span>
             <a class="button" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php else: ?>
-            <a href="/order-history.php" class="top-link"><i class="fas fa-history"></i> Order History</a>
-            <a href="/menu.php" class="top-link"><i class="fas fa-utensils"></i> Menu</a>
-            <a href="/orders.php" class="top-link"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="./order-history.php" class="top-link"><i class="fas fa-history"></i> Order History</a>
+            <a href="./menu.php" class="top-link"><i class="fas fa-utensils"></i> Menu</a>
+            <a href="./orders.php" class="top-link"><i class="fas fa-shopping-cart"></i> Orders</a>
             <span class="username" class="top-link"><i class="fas fa-user"></i> <?= $username ?: 'Username' ?></span>
             <a class="button" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         <?php endif; ?>

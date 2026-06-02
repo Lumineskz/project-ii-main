@@ -82,7 +82,7 @@ $conn && method_exists($conn, 'close') ? $conn->close() : null;
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/Project-II/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 <body>
 
