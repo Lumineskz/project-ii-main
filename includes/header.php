@@ -97,7 +97,7 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
 
     <?php if (!$userLoggedIn): ?>
 
-        <a class="button" href="../login.php">
+        <a class="button" href="./login.php">
             <i class="fas fa-sign-in-alt"></i>
             Log In
         </a>
