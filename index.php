@@ -1,6 +1,18 @@
 <?php
 include("includes/header.php");
 include("config/db.php");
+
+/* check if user is logged in, if they are, redirect to their respective dashboard */
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] === 'ADMIN') {
+        header("Location: admin/dashboard.php");
+        exit();
+    } else {
+        header("Location: user/dashboard.php");
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
