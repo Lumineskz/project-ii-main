@@ -166,24 +166,26 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
     Dashboard
 </a>
 
-<a href="./users.php">
-    <i class="fas fa-users"></i>
-    Manage Users
-</a>
+
 
 <a href="./register.php">
     <i class="fas fa-user-plus"></i>
     Add User
 </a>
 
-<a href="./edit_menu.php">
-    <i class="fas fa-edit"></i>
-    Edit Menu
+<a href="./users.php">
+    <i class="fas fa-users"></i>
+    Manage Users
 </a>
 
 <a href="./add_menu.php">
     <i class="fas fa-plus-circle"></i>
     Add Menu
+</a>
+
+<a href="./edit_menu.php">
+    <i class="fas fa-edit"></i>
+    Edit Menu
 </a>
 
 <a href="./manage_slots.php">

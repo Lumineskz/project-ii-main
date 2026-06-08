@@ -13,7 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 
-        $image = "uploads/" . basename($_FILES['image']['name']);
+        // Ensure uploads/menu directory exists
+        if (!is_dir('../uploads/menu')) {
+            mkdir('../uploads/menu', 0755, true);
+        }
+
+        $image = "../uploads/menu/" . basename($_FILES['image']['name']);
 
         move_uploaded_file(
             $_FILES['image']['tmp_name'],
