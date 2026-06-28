@@ -1,6 +1,6 @@
 <?php
 include '../config/db.php';
 include '../includes/header.php';
-
-// Assume I made some changes in this file
+// Now I make changes in any file I want
+// Go back to the cmd in project-ii-main
 ?>
