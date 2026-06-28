@@ -2,5 +2,5 @@
 include '../config/db.php';
 include '../includes/header.php';
 
-// Changes test
+// Assume I made some changes in this file
 ?>
