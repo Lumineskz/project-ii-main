@@ -92,7 +92,7 @@ $conn && method_exists($conn, 'close') ? $conn->close() : null;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign Up</title>
+    <title>Register a User</title>
 
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
