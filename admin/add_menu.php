@@ -1,6 +1,5 @@
 <?php
 require_once '../config/db.php';
-include '../includes/header.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -50,10 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Add Menu Item</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-
-<div class="add-menu-container">
-    <h2>Add Menu Item</h2>
+<body class="has-admin-sidebar">
+<?php include '../includes/header.php'; ?>
+<main class="main-content content-with-sidebar">
+    <div class="page-wrapper">
+        <div class="form-card add-menu-container">
+            <h2>Add Menu Item</h2>
     <?php if (isset($message)): ?>
         <div class="message <?php echo $message['type']; ?>">
             <?php echo $message['text']; ?>
