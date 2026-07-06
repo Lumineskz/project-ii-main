@@ -2,10 +2,11 @@
 // register.php
 
 session_start();
+include './includes/header.php';
 // Database connection
 $message = "";
 try {
-    include '../config/db.php';
+    include './config/db.php';
 } catch (Throwable $e) {
     // prevent fatal error from stopping the page; provide a friendly message
     $conn = null;
@@ -18,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $full_name = isset($_POST['full_name']) ? trim($_POST['full_name']) : '';
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
-    $role = isset($_POST['role']) ? strtoupper(trim($_POST['role'])) : '';
+    $role = isset($_POST['role']) ? $_POST['role'] : '';
 
     // Validate required fields
     if (empty($full_name) || empty($email) || empty($password) || empty($role)) {
@@ -91,44 +92,35 @@ $conn && method_exists($conn, 'close') ? $conn->close() : null;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register a User</title>
+    <title>Sign Up</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 
-<body class="has-admin-sidebar">
-<?php include '../includes/header.php'; ?>
-<main class="main-content content-with-sidebar">
-    <div class="page-wrapper">
-        <div class="form-card">
+<body>
+<div class="container">
+<div class="signup-container">
 
-    <h2>Register new user</h2>
+    <h2>Sign Up</h2>
 
     <?php if($message != ""): ?>
         <div class="message"><?php echo $message; ?></div>
     <?php endif; ?>
 
     <form method="POST" action="">
-        <div class="form-group">
-            <input type="text" name="full_name" placeholder="Full Name" required>
-        </div>
 
-        <div class="form-group">
-            <input type="email" name="email" placeholder="Email Address" required>
-        </div>
+        <input type="text" name="full_name" placeholder="Full Name" required>
 
-        <div class="form-group">
-            <input type="password" name="password" placeholder="Password" required>
-        </div>
+        <input type="email" name="email" placeholder="Email Address" required>
 
-        <div class="form-group">
-            <select name="role" required>
-                <option value="">Select User Role</option>
-                <option value="ADMIN">Admin</option>
-                <option value="STUDENT">Student</option>
-                <option value="FACULTY">Faculty</option>
-            </select>
-        </div>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <select name="role" required>
+            <option value="">Select User Role</option>
+            <option value="admin">Admin</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+        </select>
 
         <button type="submit">Register</button>
 
