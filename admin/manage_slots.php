@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . '/../config/db.php';
+include_once __DIR__ . '/../includes/slot_schedule.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,6 +17,21 @@ $currentTime = date('H:i:s');
 $isOrderWindowClosed = false;
 $currentSlot = null;
 $nextSlot = null;
+
+$scheduleState = getOrderScheduleState($conn, $currentTime);
+$isOrderWindowClosed = $scheduleState['is_closed'];
+$currentSlot = $scheduleState['current_slot'];
+$nextSlot = $scheduleState['next_slot'];
+
+$activeSlots = [];
+$activeSlotsResult = mysqli_query($conn, "SELECT slot_id, slot_name, start_time, end_time FROM order_slots WHERE is_active = 1 ORDER BY start_time ASC");
+if ($activeSlotsResult) {
+    while ($activeSlot = mysqli_fetch_assoc($activeSlotsResult)) {
+        $activeSlots[] = $activeSlot;
+    }
+    mysqli_free_result($activeSlotsResult);
+}
+$activeSlotsJson = json_encode($activeSlots, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['save_slot'])) {
@@ -86,47 +102,6 @@ if (isset($_GET['slot_id']) && intval($_GET['slot_id']) > 0) {
     mysqli_stmt_close($stmt);
 }
 
-$activeSlotQuery = mysqli_prepare($conn, "
-    SELECT slot_id, slot_name, start_time, end_time
-    FROM order_slots
-    WHERE is_active = 1
-      AND (
-            (start_time <= end_time AND start_time <= ? AND end_time >= ?)
-            OR (start_time > end_time AND (? >= start_time OR ? <= end_time))
-          )
-    ORDER BY start_time ASC
-    LIMIT 1
-");
-if ($activeSlotQuery) {
-    mysqli_stmt_bind_param($activeSlotQuery, 'ssss', $currentTime, $currentTime, $currentTime, $currentTime);
-    mysqli_stmt_execute($activeSlotQuery);
-    $slotResult = mysqli_stmt_get_result($activeSlotQuery);
-    $currentSlot = mysqli_fetch_assoc($slotResult);
-    mysqli_stmt_close($activeSlotQuery);
-}
-
-if ($currentSlot) {
-    $isOrderWindowClosed = true;
-} else {
-    $nextSlotQuery = mysqli_prepare($conn, "SELECT slot_id, slot_name, start_time, end_time FROM order_slots WHERE is_active = 1 AND start_time > ? ORDER BY start_time ASC LIMIT 1");
-    if ($nextSlotQuery) {
-        mysqli_stmt_bind_param($nextSlotQuery, 's', $currentTime);
-        mysqli_stmt_execute($nextSlotQuery);
-        $nextSlotResult = mysqli_stmt_get_result($nextSlotQuery);
-        $nextSlot = mysqli_fetch_assoc($nextSlotResult);
-        mysqli_stmt_close($nextSlotQuery);
-    }
-    if (!$nextSlot) {
-        $tomorrowSlotQuery = mysqli_prepare($conn, "SELECT slot_id, slot_name, start_time, end_time FROM order_slots WHERE is_active = 1 ORDER BY start_time ASC LIMIT 1");
-        if ($tomorrowSlotQuery) {
-            mysqli_stmt_execute($tomorrowSlotQuery);
-            $tomorrowSlotResult = mysqli_stmt_get_result($tomorrowSlotQuery);
-            $nextSlot = mysqli_fetch_assoc($tomorrowSlotResult);
-            mysqli_stmt_close($tomorrowSlotQuery);
-        }
-    }
-}
-
 $slots = [];
 $result = mysqli_query($conn, "SELECT slot_id, slot_name, start_time, end_time, is_active, created_at FROM order_slots ORDER BY start_time ASC");
 if ($result) {
@@ -143,6 +118,67 @@ if ($result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timing Schedule</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script>
+        const activeSlots = <?php echo $activeSlotsJson; ?>;
+
+        function toSeconds(timeValue) {
+            const [hours = '0', minutes = '0', seconds = '0'] = String(timeValue || '').split(':');
+            return (parseInt(hours, 10) || 0) * 3600 + (parseInt(minutes, 10) || 0) * 60 + (parseInt(seconds, 10) || 0);
+        }
+
+        function formatTime(timeValue) {
+            const [hours = '0', minutes = '0'] = String(timeValue || '').split(':');
+            const date = new Date();
+            date.setHours(parseInt(hours, 10) || 0, parseInt(minutes, 10) || 0, 0, 0);
+            return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;');
+        }
+
+        function isTimeInSlot(now, startTime, endTime) {
+            const current = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            const start = toSeconds(startTime);
+            const end = toSeconds(endTime);
+
+            if (start <= end) {
+                return current >= start && current <= end;
+            }
+
+            return current >= start || current <= end;
+        }
+
+        function updateScheduleStatus() {
+            const statusElement = document.getElementById('schedule-status');
+            if (!statusElement) {
+                return;
+            }
+
+            const now = new Date();
+            const matchingSlot = activeSlots.find((slot) => isTimeInSlot(now, slot.start_time, slot.end_time));
+            const isClosed = Boolean(matchingSlot);
+
+            if (isClosed) {
+                statusElement.className = 'slot-status slot-closed';
+                statusElement.innerHTML = 'Orders are currently closed for <strong>' + escapeHtml(matchingSlot.slot_name) + '</strong> until <strong>' + escapeHtml(formatTime(matchingSlot.end_time)) + '</strong>.';
+            } else {
+                statusElement.className = 'slot-status slot-open';
+                const nextSlot = activeSlots.find((slot) => toSeconds(slot.start_time) > (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()));
+                const nextText = nextSlot
+                    ? 'Next closure begins at <strong>' + escapeHtml(formatTime(nextSlot.start_time)) + '</strong> and ends at <strong>' + escapeHtml(formatTime(nextSlot.end_time)) + '</strong>.'
+                    : 'No active closing windows are scheduled.';
+                statusElement.innerHTML = 'Orders are currently open. ' + nextText;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateScheduleStatus);
+        window.setInterval(updateScheduleStatus, 30000);
+    </script>
 </head>
 <body class="has-admin-sidebar">
     <?php include '../includes/header.php'; ?>
@@ -158,11 +194,11 @@ if ($result) {
         <?php endif; ?>
 
         <?php if ($isOrderWindowClosed): ?>
-            <div class="slot-status slot-closed">
+            <div class="slot-status slot-closed" id="schedule-status">
                 Orders are currently closed for <strong><?php echo htmlspecialchars($currentSlot['slot_name']); ?></strong> until <strong><?php echo htmlspecialchars(date('g:i A', strtotime($currentSlot['end_time']))); ?></strong>.
             </div>
         <?php else: ?>
-            <div class="slot-status slot-open">
+            <div class="slot-status slot-open" id="schedule-status">
                 Orders are currently open.
                 <?php if ($nextSlot): ?>
                     Next closure begins at <strong><?php echo htmlspecialchars(date('g:i A', strtotime($nextSlot['start_time']))); ?></strong> and ends at <strong><?php echo htmlspecialchars(date('g:i A', strtotime($nextSlot['end_time']))); ?></strong>.
