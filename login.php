@@ -88,6 +88,8 @@ mysqli_close($conn);
 
     </form>
 
+    <a href="index.php" class="back-button">← Back to Home</a>
+
 </div>
 
 </body>

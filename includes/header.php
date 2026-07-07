@@ -65,27 +65,6 @@ if ($userLoggedIn && !$isAdmin) {
 $balanceDisplay = 'Rs. ' . number_format($balance, 2);
 ?>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click2Eat</title>
-
-
-<link rel="stylesheet" href="../css/style.css">
-
-<script
-    src="https://kit.fontawesome.com/5f3c0ac785.js"
-    crossorigin="anonymous">
-</script>
-
-
-</head>
-
-<body>
-
 <header class="site-header">
 
 
@@ -115,6 +94,11 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
         </a>
 
     <?php else: ?>
+
+        <a href="./dashboard.php" class="top-link">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+        </a>
 
         <a href="./order_history.php" class="top-link">
             <i class="fas fa-history"></i>
@@ -212,5 +196,4 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
 
 <?php endif; ?>
 
-</body>
-</html>
+<script src="https://kit.fontawesome.com/5f3c0ac785.js" crossorigin="anonymous"></script>
