@@ -366,6 +366,19 @@ body.has-admin-sidebar .content-with-sidebar {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.data-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent);
+    border-radius: 50%;
+    transform: translate(-20%, -20%);
 }
 
 .data-card .data-card-icon {
@@ -375,9 +388,10 @@ body.has-admin-sidebar .content-with-sidebar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(37, 99, 235, 0.1);
+    background: rgba(37, 99, 235, 0.12);
     color: var(--primary-dark);
     font-size: 1.15rem;
+    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
 }
 
 .data-card .label {

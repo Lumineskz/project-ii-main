@@ -111,24 +111,28 @@ if ($result) {
 
     <section class="dashboard-grid">
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-users"></i></div>
             <div class="label">Total Users</div>
             <div class="value"><?= $totalUsers ?></div>
             <div class="meta">Registered students and faculty accounts.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-utensils"></i></div>
             <div class="label">Menu Items</div>
             <div class="value"><?= $totalMenuItems ?></div>
             <div class="meta">Available and unavailable menu items.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-receipt"></i></div>
             <div class="label">Total Orders</div>
             <div class="value"><?= $totalOrders ?></div>
             <div class="meta">All orders placed through the system.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-coins"></i></div>
             <div class="label">Sales Revenue</div>
             <div class="value">Rs. <?= number_format($totalRevenue, 2) ?></div>
             <div class="meta">Revenue from completed and pending orders.</div>
@@ -136,7 +140,7 @@ if ($result) {
     </section>
 
     <section class="card">
-        <div class="section-title">Low Stock Items</div>
+        <div class="section-title"><i class="fas fa-exclamation-triangle"></i> Low Stock Items</div>
         <p class="meta">Items with 3 or fewer units remaining.</p>
         <div class="notice-box">
             <?= $lowStockItems ?> item<?= $lowStockItems === 1 ? '' : 's' ?> need restocking.
@@ -144,7 +148,7 @@ if ($result) {
     </section>
 
     <section class="card">
-        <div class="section-title">Recent Orders</div>
+        <div class="section-title"><i class="fas fa-history"></i> Recent Orders</div>
         <div class="table-responsive">
             <table>
                 <thead>
