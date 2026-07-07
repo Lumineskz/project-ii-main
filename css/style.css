@@ -189,6 +189,12 @@ button {
     background: var(--surface-muted);
 }
 
+.header-actions .top-link.active {
+    background: rgba(37, 99, 235, 0.12);
+    color: var(--primary-dark);
+    border-color: rgba(37, 99, 235, 0.18);
+}
+
 .header-actions .button {
     background: var(--primary);
     color: #ffffff;
@@ -356,12 +362,30 @@ body.has-admin-sidebar .content-with-sidebar {
     margin-bottom: 1.5rem;
 }
 
+.data-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.data-card .data-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary-dark);
+    font-size: 1.15rem;
+}
+
 .data-card .label {
     color: var(--muted);
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.15rem;
 }
 
 .data-card .value {

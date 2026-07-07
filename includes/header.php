@@ -17,6 +17,19 @@ $role = isset($_SESSION['role'])
     : '';
 
 $isAdmin = ($role === 'ADMIN');
+$currentPage = basename($_SERVER['PHP_SELF'] ?? 'dashboard.php');
+$scriptPath = $_SERVER['PHP_SELF'] ?? '';
+
+if (strpos($scriptPath, '/admin/') !== false) {
+    $loginHref = '../login.php';
+    $logoutHref = '../logout.php';
+} elseif (strpos($scriptPath, '/user/') !== false) {
+    $loginHref = '../login.php';
+    $logoutHref = '../logout.php';
+} else {
+    $loginHref = './login.php';
+    $logoutHref = './logout.php';
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -40,12 +53,7 @@ if ($userLoggedIn && !$isAdmin) {
 
     $userId = (int) $_SESSION['user_id'];
 
-    $stmt = $conn->prepare("
-        SELECT balance
-        FROM users
-        WHERE user_id = ?
-        LIMIT 1
-    ");
+    $stmt = $conn->prepare("SELECT balance FROM users WHERE user_id = ? LIMIT 1");
 
     if ($stmt) {
 
@@ -63,10 +71,13 @@ if ($userLoggedIn && !$isAdmin) {
 }
 
 $balanceDisplay = 'Rs. ' . number_format($balance, 2);
+
+$isActive = function ($pageName) use ($currentPage) {
+    return $currentPage === $pageName;
+};
 ?>
 
 <header class="site-header">
-
 
 <div class="brand">
     Click2Eat
@@ -76,7 +87,7 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
 
     <?php if (!$userLoggedIn): ?>
 
-        <a class="button" href="./login.php">
+        <a class="button" href="<?= $loginHref ?>">
             <i class="fas fa-sign-in-alt"></i>
             Log In
         </a>
@@ -88,29 +99,29 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
             <?= $username ?: 'Admin'; ?>
         </span>
 
-        <a class="button" href="../logout.php">
+        <a class="button" href="<?= $logoutHref ?>">
             <i class="fas fa-sign-out-alt"></i>
             Logout
         </a>
 
     <?php else: ?>
 
-        <a href="./dashboard.php" class="top-link">
+        <a href="./dashboard.php" class="top-link <?= $isActive('dashboard.php') ? 'active' : '' ?>">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
         </a>
 
-        <a href="./order_history.php" class="top-link">
+        <a href="./order_history.php" class="top-link <?= $isActive('order_history.php') ? 'active' : '' ?>">
             <i class="fas fa-history"></i>
             Order History
         </a>
 
-        <a href="./menu.php" class="top-link">
+        <a href="./menu.php" class="top-link <?= $isActive('menu.php') ? 'active' : '' ?>">
             <i class="fas fa-utensils"></i>
             Menu
         </a>
 
-        <a href="./orders.php" class="top-link">
+        <a href="./orders.php" class="top-link <?= $isActive('orders.php') ? 'active' : '' ?>">
             <i class="fas fa-shopping-cart"></i>
             Orders
         </a>
@@ -125,7 +136,7 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
             Balance: <?= $balanceDisplay; ?>
         </span>
 
-        <a class="button" href="../logout.php">
+        <a class="button" href="<?= $logoutHref ?>">
             <i class="fas fa-sign-out-alt"></i>
             Logout
         </a>
@@ -133,7 +144,6 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
     <?php endif; ?>
 
 </div>
-
 
 </header>
 
@@ -145,49 +155,47 @@ $balanceDisplay = 'Rs. ' . number_format($balance, 2);
     Admin Menu
 </div>
 
-<a href="./dashboard.php">
+<a href="./dashboard.php" class="<?= $isActive('dashboard.php') ? 'active' : '' ?>">
     <i class="fas fa-tachometer-alt"></i>
     Dashboard
 </a>
 
-
-
-<a href="./register.php">
+<a href="./register.php" class="<?= $isActive('register.php') ? 'active' : '' ?>">
     <i class="fas fa-user-plus"></i>
     Add User
 </a>
 
-<a href="./users.php">
+<a href="./users.php" class="<?= $isActive('users.php') ? 'active' : '' ?>">
     <i class="fas fa-users"></i>
     Manage Users
 </a>
 
-<a href="./add_menu.php">
+<a href="./add_menu.php" class="<?= $isActive('add_menu.php') ? 'active' : '' ?>">
     <i class="fas fa-plus-circle"></i>
     Add Menu
 </a>
 
-<a href="./edit_menu.php">
+<a href="./edit_menu.php" class="<?= $isActive('edit_menu.php') ? 'active' : '' ?>">
     <i class="fas fa-edit"></i>
     Edit Menu
 </a>
 
-<a href="./manage_slots.php">
+<a href="./manage_slots.php" class="<?= $isActive('manage_slots.php') ? 'active' : '' ?>">
     <i class="fas fa-clock"></i>
     Timing Schedule
 </a>
 
-<a href="./manage_orders.php">
+<a href="./manage_orders.php" class="<?= $isActive('manage_orders.php') ? 'active' : '' ?>">
     <i class="fas fa-tasks"></i>
     Manage Orders
 </a>
 
-<a href="./recharge_balance.php">
+<a href="./recharge_balance.php" class="<?= $isActive('recharge_balance.php') ? 'active' : '' ?>">
     <i class="fas fa-wallet"></i>
     Recharge Balance
 </a>
 
-<a href="./reports.php">
+<a href="./reports.php" class="<?= $isActive('reports.php') ? 'active' : '' ?>">
     <i class="fas fa-chart-line"></i>
     Kitchen Report
 </a>

@@ -89,24 +89,28 @@ if ($stmt) {
 
     <section class="dashboard-grid">
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-wallet"></i></div>
             <div class="label">Current Balance</div>
             <div class="value">Rs. <?= number_format($balance, 2) ?></div>
             <div class="meta">Available funds for your next order.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-utensils"></i></div>
             <div class="label">Available Menu Items</div>
             <div class="value"><?= $menuCount ?></div>
             <div class="meta">Fresh and available meals ready to order.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-shopping-bag"></i></div>
             <div class="label">Your Orders</div>
             <div class="value"><?= $pendingOrders ?></div>
             <div class="meta">Total orders you have placed so far.</div>
         </div>
 
         <div class="card data-card">
+            <div class="data-card-icon"><i class="fas fa-coins"></i></div>
             <div class="label">Total Spent</div>
             <div class="value">Rs. <?= number_format($totalSpent, 2) ?></div>
             <div class="meta">Amount spent on meals.</div>
