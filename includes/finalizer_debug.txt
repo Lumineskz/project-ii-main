@@ -1,0 +1,208 @@
+2026-07-09 21:18:53 RAN
+2026-07-09 21:19:03 RAN
+2026-07-09 21:20:03 RAN
+2026-07-09 21:21:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:22:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:23:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:24:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:25:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:26:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:27:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:28:03 RAN
+Closed Slots:
+Array
+(
+)
+
+2026-07-09 21:28:32 RAN
+2026-07-09 21:29:03 RAN
+2026-07-09 21:30:03 RAN
+2026-07-09 21:31:03 RAN
+2026-07-09 21:32:03 RAN
+2026-07-09 21:33:03 RAN
+2026-07-09 21:34:03 RAN
+2026-07-09 21:35:03 RAN
+2026-07-09 21:36:05 RAN
+Current PHP Time: 21:36:05
+2026-07-09 21:36:39 RAN
+Current PHP Time: 21:36:39
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:36:39
+2026-07-09 21:37:03 RAN
+Current PHP Time: 21:37:03
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:37:03
+2026-07-09 21:38:03 RAN
+Current PHP Time: 21:38:03
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:38:03
+2026-07-09 21:39:03 RAN
+Current PHP Time: 21:39:03
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:39:03
+2026-07-09 21:39:15 RAN
+Current PHP Time: 21:39:15
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:39:15
+2026-07-09 21:40:03 RAN
+Current PHP Time: 21:40:03
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:40:03
+2026-07-09 21:41:03 RAN
+Current PHP Time: 21:41:03
+Checking:
+Array
+(
+    [slot_id] => 12
+    [slot_name] => Dinner
+    [start_time] => 21:17:00
+    [end_time] => 21:31:00
+)
+Current: 21:41:03
+2026-07-09 21:41:41 RAN
+Current PHP Time: 21:41:41
+COMPARE: Current=78101 End=77460
+ADDING SLOT 12
+2026-07-09 21:42:03 RAN
+Current PHP Time: 21:42:03
+COMPARE: Current=78123 End=77460
+ADDING SLOT 12
+2026-07-09 21:43:03 RAN
+Current PHP Time: 21:43:03
+COMPARE: Current=78183 End=77460
+ADDING SLOT 12
+2026-07-09 21:43:38 RAN
+Current PHP Time: 21:43:38
+COMPARE: Current=78218 End=77460
+ADDING SLOT 12
+2026-07-09 21:44:03 RAN
+Current PHP Time: 21:44:03
+COMPARE: Current=78243 End=77460
+ADDING SLOT 12
+2026-07-09 21:45:03 RAN
+Current PHP Time: 21:45:03
+COMPARE: Current=78303 End=77460
+ADDING SLOT 12
+2026-07-09 21:46:03 RAN
+Current PHP Time: 21:46:03
+COMPARE: Current=78363 End=77460
+ADDING SLOT 12
+2026-07-09 21:46:33 RAN
+Current PHP Time: 21:46:33
+COMPARE: Current=78393 End=77460
+ADDING SLOT 12
+2026-07-09 21:47:03 RAN
+Current PHP Time: 21:47:03
+COMPARE: Current=78423 End=77460
+ADDING SLOT 12
+2026-07-09 21:48:03 RAN
+Current PHP Time: 21:48:03
+COMPARE: Current=78483 End=77460
+ADDING SLOT 12
+2026-07-09 21:48:41 RAN
+Current PHP Time: 21:48:41
+COMPARE: Current=78521 End=77460
+ADDING SLOT 12
+2026-07-09 21:49:03 RAN
+Current PHP Time: 21:49:03
+COMPARE: Current=78543 End=77460
+ADDING SLOT 12
+2026-07-09 21:50:03 RAN
+Current PHP Time: 21:50:03
+COMPARE: Current=78603 End=78900
+2026-07-09 21:50:15 RAN
+Current PHP Time: 21:50:15
+COMPARE: Current=78615 End=78900
+2026-07-09 21:51:03 RAN
+Current PHP Time: 21:51:03
+COMPARE: Current=78663 End=78900
+2026-07-09 21:52:03 RAN
+Current PHP Time: 21:52:03
+COMPARE: Current=78723 End=78900
+2026-07-09 21:53:03 RAN
+Current PHP Time: 21:53:03
+2026-07-09 21:53:53 RAN
+Current PHP Time: 21:53:53
+2026-07-09 21:54:02 RAN
+Current PHP Time: 21:54:02
+2026-07-09 21:54:03 RAN
+Current PHP Time: 21:54:03
+2026-07-09 21:55:03 RAN
+Current PHP Time: 21:55:03
