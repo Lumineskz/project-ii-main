@@ -872,6 +872,7 @@ a.button,
     border-radius: 18px;
     font-weight: 600;
     line-height: 1.5;
+    margin-top: 50px;
 }
 
 .slot-open {
@@ -918,6 +919,127 @@ a.button,
     display: inline-flex;
     align-items: center;
 }
+.reservation-wrapper{
+
+padding:15px;
+
+}
+
+.reservation-card{
+
+display:flex;
+
+gap:15px;
+
+padding:15px 0;
+
+border-bottom:1px solid #eee;
+
+align-items:center;
+
+}
+
+.reservation-card img{
+
+width:80px;
+
+height:80px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+flex-shrink:0;
+
+}
+
+.reservation-info{
+
+flex:1;
+
+}
+
+.reservation-info h4{
+
+margin:0 0 8px;
+
+font-size:17px;
+
+}
+
+.reservation-info p{
+
+margin:3px 0;
+
+color:#555;
+
+}
+
+.remove-btn{
+
+width:45px;
+
+height:45px;
+
+border:none;
+
+background:#ef4444;
+
+color:white;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:18px;
+
+transition:.2s;
+
+}
+
+.remove-btn:hover{
+
+background:#dc2626;
+
+}
+
+.reservation-summary{
+
+padding-top:20px;
+
+}
+
+.summary-row{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:20px;
+
+margin-bottom:10px;
+
+}
+
+.reservation-empty{
+
+text-align:center;
+
+padding:60px 20px;
+
+color:#666;
+
+}
+
+.reservation-empty i{
+
+font-size:60px;
+
+margin-bottom:20px;
+
+color:#999;
+
+}
 
 @media screen and (max-width: 640px) {
     .search-form {
@@ -926,6 +1048,8 @@ a.button,
 }
 
 .preorder-btn {
+    width:100%;
+    margin-top:6px;
     border: none;
     border-radius: 999px;
     background: var(--primary);
@@ -977,7 +1101,95 @@ a.button,
     color: #ffffff;
     border-color: var(--primary);
 }
+#reservationSidebar{
 
+    position:fixed;
+
+    top:0;
+
+    right:-420px;
+
+    width:400px;
+
+    max-width:100%;
+
+    height:100%;
+
+    background:white;
+
+    box-shadow:-5px 0 20px rgba(0,0,0,.25);
+
+    transition:.3s;
+
+    z-index:9999;
+
+    overflow-y:auto;
+
+}
+
+#reservationSidebar.open{
+
+    right:0;
+
+}
+
+#reservationOverlay{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    z-index:9998;
+
+}
+
+#reservationOverlay.show{
+
+    display:block;
+
+}
+
+.reservation-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+.reservation-header h2{
+
+    margin:0;
+
+}
+
+#closeReservation{
+
+    background:none;
+
+    border:none;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+}
 @media screen and (max-width: 640px) {
     .menu-card {
         min-width: 100%;
@@ -993,7 +1205,227 @@ a.button,
         padding: 0.65rem 0.85rem;
     }
 }
+/* Recharge style*/
+.recharge-container{
 
+            width:450px;
+            margin:70px auto;
+            background:#fff;
+            padding:35px;
+            border-radius:12px;
+            box-shadow:0 8px 25px rgba(0,0,0,.15);
+
+        }
+
+        .recharge-container h2{
+
+            text-align:center;
+            margin-bottom:30px;
+
+        }
+
+        .current-balance{
+
+            background:#f8f8f8;
+            padding:18px;
+            text-align:center;
+            font-size:22px;
+            border-radius:8px;
+            margin-bottom:25px;
+
+        }
+
+        .current-balance span{
+
+            color:#0b8d36;
+            font-weight:bold;
+
+        }
+
+        label{
+
+            font-weight:bold;
+            display:block;
+            margin-bottom:8px;
+
+        }
+
+        input[type=number]{
+
+            width:100%;
+            padding:12px;
+            font-size:17px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            margin-bottom:20px;
+
+        }
+
+        .btn{
+
+            width:100%;
+            padding:13px;
+            background:#1d4ed8;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:17px;
+
+        }
+
+        .btn:hover{
+
+            background:#1e40af;
+
+        }
+
+        .success{
+
+            background:#d1fae5;
+            color:#065f46;
+            padding:12px;
+            border-radius:8px;
+            margin-bottom:15px;
+
+        }
+
+        .error{
+
+            background:#fee2e2;
+            color:#991b1b;
+            padding:12px;
+            border-radius:8px;
+            margin-bottom:15px;
+
+        }
+
+        .back{
+
+            display:block;
+            margin-top:18px;
+            text-align:center;
+            text-decoration:none;
+
+        }
+        .success-message{
+    width:90%;
+    margin:20px auto;
+    padding:15px;
+    border-radius:8px;
+    background:#d4edda;
+    color:#155724;
+    font-weight:bold;
+}
+
+.error-message{
+    width:90%;
+    margin:20px auto;
+    padding:15px;
+    border-radius:8px;
+    background:#f8d7da;
+    color:#721c24;
+    font-weight:bold;
+}
+.quantity-input{
+    width:100%;
+    padding:10px;
+    margin:12px 0;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    text-align:center;
+    font-size:15px;
+    box-sizing:border-box;
+}
+.reservation-item{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:15px;
+
+border-bottom:1px solid #eee;
+
+}
+
+.reservation-item img{
+
+width:70px;
+
+height:70px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+}
+
+.reservation-details{
+
+flex:1;
+
+line-height:1.6;
+
+}
+
+.remove-reservation{
+
+background:#ef4444;
+
+color:white;
+
+border:none;
+
+padding:10px 12px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:18px;
+
+}
+
+.remove-reservation:hover{
+
+background:#dc2626;
+
+}
+
+.reservation-total{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:20px;
+
+font-size:20px;
+
+font-weight:bold;
+
+}
+
+.reservation-empty{
+
+text-align:center;
+
+padding:60px 20px;
+
+color:#777;
+
+}
+
+.reservation-empty i{
+
+font-size:55px;
+
+margin-bottom:15px;
+
+}
 @media screen and (max-width: 1024px) {
     .main-content {
         padding: 100px 20px 32px;
@@ -1015,6 +1447,7 @@ a.button,
         left: 0;
         width: 100%;
     }
+
 }
 
 @media screen and (max-width: 768px) {

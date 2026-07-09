@@ -2,7 +2,7 @@
 
 $configuredTimezone = getenv('APP_TIMEZONE');
 if ($configuredTimezone === false || $configuredTimezone === '') {
-    $configuredTimezone = 'Asia/Manila';
+    $configuredTimezone = 'Asia/Kathmandu';
 }
 date_default_timezone_set($configuredTimezone);
 
@@ -40,7 +40,29 @@ function getOrderScheduleState($conn, $now = null)
     $currentTimeSeconds = normalizeSlotTimeValue($now);
     $activeSlots = [];
 
-    $result = mysqli_query($conn, "SELECT slot_id, slot_name, start_time, end_time FROM order_slots WHERE is_active = 1 ORDER BY start_time ASC");
+    $result = mysqli_query(
+    $conn,
+    "
+    SELECT 
+        os.slot_id,
+        os.slot_name,
+        os.start_time,
+        os.end_time
+
+    FROM order_slots os
+
+    WHERE os.is_active = 1
+
+    AND NOT EXISTS (
+        SELECT 1
+        FROM finalization_logs fl
+        WHERE fl.slot_id = os.slot_id
+        AND fl.finalized_date = CURDATE()
+    )
+
+    ORDER BY os.start_time ASC
+    "
+);
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
             $activeSlots[] = $row;
@@ -68,9 +90,91 @@ function getOrderScheduleState($conn, $now = null)
     }
 
     return [
-        'is_closed' => (bool) $currentSlot,
-        'current_slot' => $currentSlot,
-        'next_slot' => $nextSlot,
-        'current_time' => $now,
-    ];
+    'is_closed' => (bool) $currentSlot,
+    'current_slot' => $currentSlot,
+    'next_slot' => $nextSlot,
+    'current_time' => $now,
+];
+
+} // <-- closes getOrderScheduleState()
+
+
+function getClosedSlots($conn, $now = null)
+{
+    $now = $now ?? date('H:i:s');
+
+    $closedSlots = [];
+
+    $result = mysqli_query(
+    $conn,
+    "
+    SELECT 
+        os.slot_id,
+        os.slot_name,
+        os.start_time,
+        os.end_time
+    FROM order_slots os
+    WHERE os.is_active = 1
+
+    AND NOT EXISTS (
+        SELECT 1
+        FROM finalization_logs fl
+        WHERE fl.slot_id = os.slot_id
+        AND fl.finalized_date = CURDATE()
+    )
+    "
+);
+
+
+    if ($result) {
+
+    //     while ($slot = mysqli_fetch_assoc($result)) {
+    //         file_put_contents(
+    //     __DIR__ . "/finalizer_debug.txt",
+    //     "Checking:\n" . print_r($slot,true) .
+    //     "Current: ".$now."\n",
+    //     FILE_APPEND
+    // );
+    //         if (
+    //             normalizeSlotTimeValue($now)
+    //             >=
+    //             normalizeSlotTimeValue($slot['end_time'])
+    //         ) {
+
+    //             $closedSlots[] = $slot;
+
+    //         }
+
+    //     }
+    while ($slot = mysqli_fetch_assoc($result)) {
+
+    $currentSeconds = normalizeSlotTimeValue($now);
+    $endSeconds = normalizeSlotTimeValue($slot['end_time']);
+
+    file_put_contents(
+        __DIR__ . "/finalizer_debug.txt",
+        "COMPARE: Current=$currentSeconds End=$endSeconds\n",
+        FILE_APPEND
+    );
+
+
+    if ($currentSeconds >= $endSeconds) {
+
+        file_put_contents(
+            __DIR__ . "/finalizer_debug.txt",
+            "ADDING SLOT ".$slot['slot_id']."\n",
+            FILE_APPEND
+        );
+
+        $closedSlots[] = $slot;
+
+    }
+
 }
+        mysqli_free_result($result);
+    }
+
+
+    return $closedSlots;
+}
+

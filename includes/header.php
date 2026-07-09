@@ -69,7 +69,43 @@ if ($userLoggedIn && !$isAdmin) {
         $stmt->close();
     }
 }
+/*
+|--------------------------------------------------------------------------
+| Reservation Count
+|--------------------------------------------------------------------------
+*/
 
+$reservationCount = 0;
+
+if ($userLoggedIn && !$isAdmin) {
+
+    $stmt = $conn->prepare("
+        SELECT COALESCE(SUM(ri.quantity),0) AS total
+        FROM reservation_items ri
+        INNER JOIN reservations r
+            ON ri.reservation_id = r.reservation_id
+        WHERE r.user_id = ?
+        AND r.status='RESERVED'
+    ");
+
+    if($stmt){
+
+        $stmt->bind_param("i",$userId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if($row = $result->fetch_assoc()){
+
+            $reservationCount = (int)$row['total'];
+
+        }
+
+        $stmt->close();
+
+    }
+
+}
 $balanceDisplay = 'Rs. ' . number_format($balance, 2);
 
 $isActive = function ($pageName) use ($currentPage) {
@@ -121,20 +157,23 @@ $isActive = function ($pageName) use ($currentPage) {
             Menu
         </a>
 
-        <a href="./orders.php" class="top-link <?= $isActive('orders.php') ? 'active' : '' ?>">
-            <i class="fas fa-shopping-cart"></i>
-            Orders
-        </a>
+        <a href="#" id="reservationToggle" class="top-link">
+    <i class="fas fa-shopping-basket"></i>
+    Reservations
+    <span id="reservationCount">
+    (<?= $reservationCount ?>)
+</span>
+</a>
 
         <span class="username top-link">
             <i class="fas fa-user"></i>
             <?= $username ?: 'Student'; ?>
         </span>
 
-        <span class="balance top-link">
+        <a href="./recharge.php" class="balance top-link">
             <i class="fas fa-wallet"></i>
             Balance: <?= $balanceDisplay; ?>
-        </span>
+        </a>
 
         <a class="button" href="<?= $logoutHref ?>">
             <i class="fas fa-sign-out-alt"></i>
@@ -203,5 +242,90 @@ $isActive = function ($pageName) use ($currentPage) {
 </aside>
 
 <?php endif; ?>
+<div id="reservationOverlay"></div>
 
+<div id="reservationSidebar">
+
+    <div class="reservation-header">
+
+        <h2>Reservation Cart</h2>
+
+        <button id="closeReservation">
+
+            &times;
+
+        </button>
+
+    </div>
+
+    <div id="reservationContent">
+
+        Loading...
+
+    </div>
+
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggle = document.getElementById("reservationToggle");
+    const sidebar = document.getElementById("reservationSidebar");
+    const overlay = document.getElementById("reservationOverlay");
+    const close = document.getElementById("closeReservation");
+
+    if (!toggle) return;
+    function updateReservationCount(){
+
+    fetch("../user/fetch_reservations.php")
+    .then(r=>r.json())
+    .then(data=>{
+
+        let total = 0;
+
+        if(!Array.isArray(data)){
+    data = [];
+}
+
+data.forEach(item=>{
+
+            total += parseInt(item.quantity || 0);
+
+        });
+
+        document.getElementById("reservationCount").innerHTML =
+            "(" + total + ")";
+
+    });
+
+}
+    toggle.onclick = function (e) {
+
+        e.preventDefault();
+
+        sidebar.classList.add("open");
+        overlay.classList.add("show");
+
+        fetch("../includes/reservation_loader.php")
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("reservationContent").innerHTML = html;
+
+                updateReservationCount();
+            });
+    };
+
+    close.onclick = function () {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+    };
+
+    overlay.onclick = function () {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+    };
+
+});
+
+</script>
 <script src="https://kit.fontawesome.com/5f3c0ac785.js" crossorigin="anonymous"></script>

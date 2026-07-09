@@ -144,6 +144,27 @@ $menu_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
+    <?php
+
+if(isset($_SESSION['reservation_success']))
+{
+    echo "<div class='success-message'>"
+        .htmlspecialchars($_SESSION['reservation_success'])
+        ."</div>";
+
+    unset($_SESSION['reservation_success']);
+}
+
+if(isset($_SESSION['reservation_error']))
+{
+    echo "<div class='error-message'>"
+        .htmlspecialchars($_SESSION['reservation_error'])
+        ."</div>";
+
+    unset($_SESSION['reservation_error']);
+}
+
+?>
 
     <?php if ($isOrderWindowClosed && $currentSlot): ?>
         <div class="slot-status slot-closed" id="schedule-status">
@@ -180,9 +201,31 @@ $menu_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <div class="menu-card-price">Rs. <?php echo number_format($item['price'], 2); ?></div>
                                 <div class="menu-card-stock">Stock: <?php echo $item['available_stock']; ?></div>
                             </div>
-                            <button class="preorder-btn" <?php echo ($isOrderWindowClosed || $item['available_stock'] == 0) ? 'disabled' : ''; ?> >
-                                <?php echo $isOrderWindowClosed ? 'Closed' : 'Pre-order'; ?>
+                        <form action="add_reservation.php" method="POST">
+
+                            <input
+                                type="hidden"
+                                name="item_id"
+                                value="<?php echo $item['item_id']; ?>">
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="<?php echo $item['available_stock']; ?>"
+                                class="quantity-input">
+
+                            <button
+                                type="submit"
+                                class="preorder-btn"
+                                <?php echo ($isOrderWindowClosed || $item['available_stock'] == 0) ? 'disabled' : ''; ?>>
+
+                                <?php echo $isOrderWindowClosed ? 'Closed' : 'Reserve'; ?>
+
                             </button>
+
+                        </form>
                         </div>
                     </div>
                 </div>
