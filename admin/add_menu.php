@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_name = $_POST['item_name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $available_stock = $_POST['available_stock'];
     $is_available = $_POST['is_available'];
 
     $image = "";
@@ -28,12 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_name = mysqli_real_escape_string($conn, $item_name);
     $description = mysqli_real_escape_string($conn, $description);
     $price = floatval($price);
+    $available_stock = intval($available_stock);
     $is_available = intval($is_available);
     $image = mysqli_real_escape_string($conn, $image);
 
     $sql = "INSERT INTO menu_items
-            (item_name, description, price, image, is_available)
-            VALUES ('$item_name', '$description', $price, '$image', $is_available)";
+            (item_name, description, price, available_stock, image, is_available)
+            VALUES ('$item_name', '$description', $price, $available_stock, '$image', $is_available)";
 
     if (mysqli_query($conn, $sql)) {
         $message = ['type' => 'success', 'text' => 'Item added successfully!'];
@@ -76,6 +78,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-group">
             <label for="price">Price:</label>
             <input type="number" id="price" name="price" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label for="available_stock">Available Stock:</label>
+            <input
+               type="number"
+               id="available_stock"
+               name="available_stock"
+               min="0"
+               required>
         </div>
 
         <div class="form-group">
