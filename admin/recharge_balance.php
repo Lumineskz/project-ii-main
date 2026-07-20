@@ -60,7 +60,6 @@ if (isset($_POST['recharge_balance'])) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="has-admin-sidebar">
-<?php include '../includes/header.php'; ?>
 <main class="main-content content-with-sidebar">
     <div class="page-wrapper">
         <div class="page-header">
