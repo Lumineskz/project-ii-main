@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/header.php';
 
-if(isset($_POST['add_balance'])){
+if(isset($_POST['recharge_balance'])){
 
     $user_id = $_POST['user_id'];
     $amount = $_POST['amount'];
@@ -18,7 +18,7 @@ if(isset($_POST['add_balance'])){
 
     mysqli_query($conn,
     "INSERT INTO transactions(user_id,type,amount,description)
-    VALUES('$user_id','CREDIT','$amount','Balance added by Admin')");
+    VALUES('$user_id','CREDIT','$amount','Balance recharged by Admin')");
 
     header("Location: users.php");
     exit();
@@ -131,7 +131,7 @@ if ($stmt) {
                         <th>Email</th>
                         <th>Role</th>
                         <th>Balance</th>
-                        <th>Add Balance</th>
+                        <th>Recharge Balance</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -163,9 +163,9 @@ if ($stmt) {
 
                                         <button
                                             type="submit"
-                                            name="add_balance"
+                                            name="recharge_balance"
                                             class="btn btn-success">
-                                            Add
+                                            Recharge Balance
 
                                         </button>
 
@@ -182,6 +182,11 @@ if ($stmt) {
 
                                              <i class="fas fa-edit"></i> Edit
 
+                                        </a>
+
+                                        <a class="btn btn-success"
+                                            href="recharge_balance.php?id=<?= (int)$row['user_id']; ?>">
+                                             <i class="fas fa-plus-circle"></i> Recharge Balance
                                         </a>
 
                                         <form method="post"
