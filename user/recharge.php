@@ -1,7 +1,6 @@
 <?php
 include '../config/db.php';
 include '../includes/header.php';
-include '../includes/reservation_sidebar.php';
 
 /*
 |--------------------------------------------------------------------------

@@ -130,7 +130,7 @@ if ($stmt) {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Balance</th>
+                        <!-- <th>Balance</th> -->
                         <th>Recharge Balance</th>
                         <th>Action</th>
                     </tr>
@@ -146,7 +146,7 @@ if ($stmt) {
                                 <td><?= htmlspecialchars($row['email']); ?></td>
                                 <td><?= htmlspecialchars($row['role']); ?></td>
                                 <td>Rs. <?= number_format((float) $row['balance'], 2); ?></td>
-                                <td>
+                                <!-- <td>
                                     <form method="post" class="balance-form inline-form">
                                         <input
                                             type="hidden"
@@ -170,7 +170,7 @@ if ($stmt) {
                                         </button>
 
                                     </form>
-                                </td>
+                                </td> -->
 
                                 <!-- Action Column -->
                                 <td>

@@ -95,7 +95,7 @@ button {
 }
 
 .btn-danger {
-    background: var(--danger);
+    background: #ca3e3e;
     color: #ffffff;
 }
 
@@ -104,7 +104,9 @@ button {
     color: var(--text);
     border-color: var(--border);
 }
-
+.btn-success{
+    text-decoration: none;
+}
 .table-actions {
     display: flex;
     flex-wrap: wrap;
