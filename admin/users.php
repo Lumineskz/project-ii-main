@@ -3,6 +3,27 @@ session_start();
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/header.php';
 
+if(isset($_POST['recharge_balance'])){
+
+    $user_id = $_POST['user_id'];
+    $amount = $_POST['amount'];
+
+    $stmt = mysqli_prepare($conn,
+    "UPDATE users
+     SET balance = balance + ?
+     WHERE user_id = ?");
+
+    mysqli_stmt_bind_param($stmt,"di",$amount,$user_id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_query($conn,
+    "INSERT INTO transactions(user_id,type,amount,description)
+    VALUES('$user_id','CREDIT','$amount','Balance recharged by Admin')");
+
+    header("Location: users.php");
+    exit();
+}
+
 if (!isset($_SESSION['user_id']) || strtoupper($_SESSION['role'] ?? '') !== 'ADMIN') {
     header('Location: ../login.php');
     exit;
@@ -110,12 +131,13 @@ if ($stmt) {
                         <th>Email</th>
                         <th>Role</th>
                         <th>Balance</th>
+                        <th>Recharge Balance</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($users)): ?>
-                        <tr><td colspan="6">No users found.</td></tr>
+                        <tr><td colspan="7">No users found.</td></tr>
                     <?php else: ?>
                         <?php foreach ($users as $row): ?>
                             <tr>
@@ -125,15 +147,64 @@ if ($stmt) {
                                 <td><?= htmlspecialchars($row['role']); ?></td>
                                 <td>Rs. <?= number_format((float) $row['balance'], 2); ?></td>
                                 <td>
+                                    <form method="post" class="balance-form inline-form">
+                                        <input
+                                            type="hidden"
+                                            name="user_id"
+                                            value="<?= (int)$row['user_id']; ?>">
+
+                                        <input
+                                            type="number"
+                                            name="amount"
+                                            min="1"
+                                            placeholder="Rs."
+                                            required
+                                            class="balance-input">
+
+                                        <button
+                                            type="submit"
+                                            name="recharge_balance"
+                                            class="btn btn-success">
+                                            Recharge Balance
+
+                                        </button>
+
+                                    </form>
+                                </td>
+
+                                <!-- Action Column -->
+                                <td>
+
                                     <div class="table-actions">
-                                        <a class="btn btn-primary" href="edit_user.php?id=<?= (int) $row['user_id']; ?>">
-                                            <i class="fas fa-edit"></i> Edit
+
+                                        <a class="btn btn-primary"
+                                            href="edit_user.php?id=<?= (int)$row['user_id']; ?>">
+
+                                             <i class="fas fa-edit"></i> Edit
+
                                         </a>
-                                        <form method="post" onsubmit="return confirm('Delete this user account?');" style="display:inline;">
-                                            <button type="submit" name="delete_user" value="<?= (int) $row['user_id']; ?>" class="btn btn-danger">
+
+                                        <a class="btn btn-success"
+                                            href="recharge_balance.php?id=<?= (int)$row['user_id']; ?>">
+                                             <i class="fas fa-plus-circle"></i> Recharge Balance
+                                        </a>
+
+                                        <form method="post"
+                                            onsubmit="return confirm('Delete this user account?');"
+                                            class="inline-form">
+
+                                            <button
+                                                type="submit"
+                                                name="delete_user"
+                                                value="<?= (int)$row['user_id']; ?>"
+                                                class="btn btn-danger">
+
                                                 <i class="fas fa-trash"></i> Delete
+
                                             </button>
+
                                         </form>
+
                                     </div>
                                 </td>
                             </tr>

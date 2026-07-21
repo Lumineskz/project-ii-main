@@ -1587,3 +1587,18 @@ hr{
 }
 
 }
+.balance-form{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.balance-input{
+    width:80px;
+    padding:6px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+.inline-form{
+    display:inline;
+}
