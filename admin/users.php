@@ -90,7 +90,7 @@ if ($stmt) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="has-admin-sidebar">
 <main class="main-content content-with-sidebar">

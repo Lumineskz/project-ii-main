@@ -105,7 +105,7 @@ if ($result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Menu</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="has-admin-sidebar">
 <?php include_once __DIR__ . '/../includes/header.php'; ?>

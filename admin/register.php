@@ -93,7 +93,7 @@ $conn && method_exists($conn, 'close') ? $conn->close() : null;
 <head>
     <title>Register a User</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
 
 <body class="has-admin-sidebar">
