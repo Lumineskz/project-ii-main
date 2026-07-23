@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . '/../config/db.php';
 
+
 if (!isset($conn)) {
     die('Database connection not configured.');
 }

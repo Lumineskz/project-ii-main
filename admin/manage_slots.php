@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . '/../config/db.php';
+
 include_once __DIR__ . '/../includes/slot_schedule.php';
 
 if (session_status() === PHP_SESSION_NONE) {
