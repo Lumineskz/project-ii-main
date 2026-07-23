@@ -1,6 +1,7 @@
 <?php
 require_once '../config/db.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $item_name = $_POST['item_name'];
@@ -49,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Add Menu Item</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="has-admin-sidebar">
 <?php include '../includes/header.php'; ?>

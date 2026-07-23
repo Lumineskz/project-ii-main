@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
+
 requireRole('admin');
 
 $currentPage = 'kitchen';
@@ -55,7 +56,7 @@ while ($r = mysqli_fetch_assoc($report)) {
       .page-body { padding: 0 !important; }
       body { background: #fff; }
     }
-    
+
   </style>
 </head>
 <body>

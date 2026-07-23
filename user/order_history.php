@@ -38,7 +38,7 @@ $orderResult = mysqli_query($conn, $orderQuery);
 
     <title style:>Order History</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 
 </head>
 
