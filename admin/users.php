@@ -131,7 +131,7 @@ if ($stmt) {
                         <th>Email</th>
                         <th>Role</th>
                         <!-- <th>Balance</th> -->
-                        <th>Recharge Balance</th>
+                        <th>Balance</th>
                         <th>Action</th>
                     </tr>
                 </thead>

@@ -1,20 +1,17 @@
 <?php
-    $host = 'localhost';
-    $db = 'canteen_system';
-    $user = 'root';
-    $pass = '';
+/**
+ * Database connection (mysqli)
+ * Edit the four constants below to match your phpMyAdmin / MySQL setup.
+ */
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'canteen_preorder');
 
-    $configuredTimezone = getenv('APP_TIMEZONE');
-    if ($configuredTimezone === false || $configuredTimezone === '') {
-        $configuredTimezone = 'Asia/Manila';
-    }
-    date_default_timezone_set($configuredTimezone);
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-    $conn = new mysqli($host, $user, $pass, $db);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }else{
-        // echo "Connected successfully";
-    }
+if (!$conn) {
+    die('Database connection failed: ' . mysqli_connect_error());
+}
 
-?>
+mysqli_set_charset($conn, 'utf8mb4');
