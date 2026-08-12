@@ -10,8 +10,8 @@ $action = $_POST['action'] ?? '';
 $redirectDate = $_POST['redirect_date'] ?? date('Y-m-d');
 
 if ($action === 'force_finalize') {
-    finalizeDueSchedules($conn);
-    setFlash('success', 'Due meal schedules have been processed and any pending reservations were finalized.');
+    forceFinalizePendingReservations($conn, $redirectDate);
+    setFlash('success', 'Reserved cart orders for ' . e($redirectDate) . ' have been finalized and added to live orders.');
     redirect('manage_orders.php?date=' . urlencode($redirectDate));
 }
 

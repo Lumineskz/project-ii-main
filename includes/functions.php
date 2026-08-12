@@ -116,13 +116,32 @@ function finalizeDueSchedules($conn) {
     }
 }
 
-function processSchedule($conn, $scheduleId, $orderDate) {
+function forceFinalizePendingReservations($conn, $orderDate = null) {
+    if ($orderDate === null) {
+        $orderDate = date('Y-m-d');
+    }
+
+    $stmt = mysqli_prepare($conn, "SELECT DISTINCT c.schedule_id
+                                   FROM cart c
+                                   JOIN meal_schedules m ON m.id = c.schedule_id
+                                   WHERE c.order_date = ?
+                                     AND m.is_active = 1");
+    mysqli_stmt_bind_param($stmt, 's', $orderDate);
+    mysqli_stmt_execute($stmt);
+    $schedules = mysqli_stmt_get_result($stmt);
+
+    while ($schedule = mysqli_fetch_assoc($schedules)) {
+        processSchedule($conn, $schedule['schedule_id'], $orderDate, true);
+    }
+}
+
+function processSchedule($conn, $scheduleId, $orderDate, $force = false) {
     // Lock in the fact that we're processing this schedule/date so a
     // concurrent request doesn't double-process it.
     $lock = mysqli_prepare($conn, "INSERT IGNORE INTO processed_schedules (schedule_id, process_date) VALUES (?, ?)");
     mysqli_stmt_bind_param($lock, 'is', $scheduleId, $orderDate);
     mysqli_stmt_execute($lock);
-    if (mysqli_stmt_affected_rows($lock) === 0) return; // someone else grabbed it
+    if (!$force && mysqli_stmt_affected_rows($lock) === 0) return; // someone else grabbed it
 
     // Pull all cart rows for this schedule/date, oldest first (FIFO stock allocation)
     $stmt = mysqli_prepare($conn, "SELECT c.*, m.price, m.stock, m.name AS item_name
