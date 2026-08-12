@@ -48,18 +48,28 @@ $orders = mysqli_stmt_get_result($stmt);
       <?php include __DIR__ . '/../includes/flash.php'; ?>
 
       <div class="card">
-        <form method="GET" class="menu-toolbar">
-          <div class="filters">
-            <input type="date" name="date" value="<?= e($filterDate) ?>" onchange="this.form.submit()">
-            <select name="status" onchange="this.form.submit()">
-              <option value="">All statuses</option>
-              <?php foreach (['finalized','preparing','ready','completed','cancelled'] as $s): ?>
-                <option value="<?= $s ?>" <?= $filterStatus === $s ? 'selected' : '' ?>><?= ucfirst($s) ?></option>
-              <?php endforeach; ?>
-            </select>
+        <div class="menu-toolbar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <form method="GET" style="display:flex;align-items:center;gap:12px;">
+            <div class="filters">
+              <input type="date" name="date" value="<?= e($filterDate) ?>" onchange="this.form.submit()">
+              <select name="status" onchange="this.form.submit()">
+                <option value="">All statuses</option>
+                <?php foreach (['finalized','preparing','ready','completed','cancelled'] as $s): ?>
+                  <option value="<?= $s ?>" <?= $filterStatus === $s ? 'selected' : '' ?>><?= ucfirst($s) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </form>
+
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span class="text-muted" style="font-size:.85rem;"><?= mysqli_num_rows($orders) ?> order(s) found</span>
+            <form action="orders_process.php" method="POST" style="margin:0;">
+              <input type="hidden" name="action" value="force_finalize">
+              <input type="hidden" name="redirect_date" value="<?= e($filterDate) ?>">
+              <button type="submit" class="btn btn-primary btn-sm">Force finalize due orders</button>
+            </form>
           </div>
-          <span class="text-muted" style="font-size:.85rem;"><?= mysqli_num_rows($orders) ?> order(s) found</span>
-        </form>
+        </div>
 
         <div class="table-wrap">
           <table>

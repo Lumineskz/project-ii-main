@@ -6,9 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('manage_orders.php');
 }
 
+$action = $_POST['action'] ?? '';
+$redirectDate = $_POST['redirect_date'] ?? date('Y-m-d');
+
+if ($action === 'force_finalize') {
+    finalizeDueSchedules($conn);
+    setFlash('success', 'Due meal schedules have been processed and any pending reservations were finalized.');
+    redirect('manage_orders.php?date=' . urlencode($redirectDate));
+}
+
 $orderId = (int)($_POST['order_id'] ?? 0);
 $newStatus = $_POST['status'] ?? '';
-$redirectDate = $_POST['redirect_date'] ?? date('Y-m-d');
 $validStatuses = ['finalized','preparing','ready','completed','cancelled'];
 
 if ($orderId <= 0 || !in_array($newStatus, $validStatuses)) {
